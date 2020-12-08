@@ -11,17 +11,17 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 
 app.get('/marcarConsulta', (req, res) => { //localhost:3001/marcarConsulta
-	res.send("result marcarConsulta");
+	marcarConsulta(res);
 });
 
 
 app.get('/consultarAgenda', (req, res) => { //localhost:3001/consultarAgenda
-	consultarAgenda(res);
+    consultarAgenda(res);
 });
 
 
-app.get('/contaFamilia', (req, res) => { //localhost:3001/contaFamilia
-	contaFamilia(res);
+app.get('/convenio', (req, res) => { //localhost:3001/convenio
+	convenio(res);
 });
 
 
@@ -93,7 +93,7 @@ async function consultarAgenda(res)
 }
 
 
-async function contaFamilia(res) 
+async function convenio(res) 
 {
   let connection;
   try {
@@ -130,7 +130,7 @@ async function editarFicha(res)
     connection = await oracledb.getConnection(dbConfig);
     console.log('Connection was successful!');
 	
-	const sql = 'update * from EDITAR_FICHA'; //mude a tabela para a tabela pra tabela que precisa ser consultada
+	const sql = 'select * from EDITAR_FICHA'; //mude a tabela para a tabela pra tabela que precisa ser consultada
 	let ret =  await connection.execute(sql);
 
 	res.send(ret.rows);
