@@ -9,47 +9,52 @@ var app = express();
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-
-app.get('/marcarConsulta', (req, res) => { //localhost:3001/marcarConsulta
+//endereço será: localhost:3001/marcarConsulta
+app.get('/marcarConsulta', (req, res) => { 
 	marcarConsulta(res);
 });
 
 
-app.get('/consultarAgenda', (req, res) => { //localhost:3001/consultarAgenda
+//endereço será: localhost:3001/consultarAgenda
+app.get('/consultarAgenda', (req, res) => { 
     consultarAgenda(res);
 });
 
 
-app.get('/convenio', (req, res) => { //localhost:3001/convenio
+//endereço será: localhost:3001/convenio
+app.get('/convenio', (req, res) => { 
 	convenio(res);
 });
 
 
-app.get('/editarFicha', (req, res) => { //localhost:3001/editarFicha
+//endereço será: localhost:3001/editarFicha
+app.get('/editarFicha', (req, res) => {
 	editarFicha(res);
 });
 
 
+//portas abertas
 app.listen(3001, () => {
   console.log(`Server launched on port 3001`)
 })
 //------------------
 
+
+//funções de chamada dos dados do banco
 async function marcarConsulta(res) 
 {
   let connection;
   try {
-    // CÓDIGO CONTINUA O MESMO
-    connection = await oracledb.getConnection(dbConfig);
+    connection = await oracledb.getConnection(dbConfig); //testar conexão
     console.log('Connection was successful!');
 	
-	const sql = 'select * from MARCAR_CONSULTA'; //mude a tabela para a tabela de consultas
+	const sql = 'select * from MARCAR_CONSULTA'; //demonstrar tudo da tabela específica
 	let ret =  await connection.execute(sql);
 
 	res.send(ret.rows);
 	return ret;
 	
-
+//tratamento de erros
   } catch (err) {
     console.error(err);
   } finally {
@@ -68,11 +73,10 @@ async function consultarAgenda(res)
 {
   let connection;
   try {
-    // CÓDIGO CONTINUA O MESMO
     connection = await oracledb.getConnection(dbConfig);
     console.log('Connection was successful!');
 	
-	const sql = 'select * from CONSULTAR_AGENDA'; //mude a tabela para a tabela de ficha e mude o comando de SELECT para UPDATE
+	const sql = 'select * from CONSULTAR_AGENDA'; 
 	let ret =  await connection.execute(sql);
 
 	res.send(ret.rows);
@@ -97,11 +101,10 @@ async function convenio(res)
 {
   let connection;
   try {
-    // CÓDIGO CONTINUA O MESMO
     connection = await oracledb.getConnection(dbConfig);
     console.log('Connection was successful!');
 	
-	const sql = 'select * from CONVENIO'; //mude a tabela para a tabela pra tabela que precisa ser consultada
+	const sql = 'select * from CONVENIO'; 
 	let ret =  await connection.execute(sql);
 
 	res.send(ret.rows);
@@ -126,11 +129,10 @@ async function editarFicha(res)
 {
   let connection;
   try {
-    // CÓDIGO CONTINUA O MESMO
     connection = await oracledb.getConnection(dbConfig);
     console.log('Connection was successful!');
 	
-	const sql = 'select * from EDITAR_FICHA'; //mude a tabela para a tabela pra tabela que precisa ser consultada
+	const sql = 'select * from EDITAR_FICHA'; 
 	let ret =  await connection.execute(sql);
 
 	res.send(ret.rows);
